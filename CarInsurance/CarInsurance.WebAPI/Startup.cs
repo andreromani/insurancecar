@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace CarInsurance.WebAPI
 {
@@ -28,6 +31,14 @@ namespace CarInsurance.WebAPI
             {
                 options.UseOracle(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            var documentationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CarInsurance.Api.xml");
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "WebSaudeApi", Version = "v1" });
+                if (File.Exists(documentationPath)) { c.IncludeXmlComments(documentationPath); }               
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -36,6 +47,14 @@ namespace CarInsurance.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseMvc();
         }
     }
