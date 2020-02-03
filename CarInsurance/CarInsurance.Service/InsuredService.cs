@@ -1,9 +1,6 @@
 ﻿using CarInsurance.Domain.Models;
 using CarInsurance.Repository.Repository.Interfaces;
 using CarInsurance.Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CarInsurance.Service
 {

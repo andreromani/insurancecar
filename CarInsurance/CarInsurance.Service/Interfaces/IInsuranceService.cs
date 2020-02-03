@@ -1,7 +1,5 @@
 ﻿using CarInsurance.Domain.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CarInsurance.Service.Interfaces
 {
@@ -9,6 +7,8 @@ namespace CarInsurance.Service.Interfaces
     {
         Insurance CalculateInsuranceValue(Insurance insurance);
         double GetAverage();
+        IEnumerable<Insurance> GetAll();
+        Insurance GetById(int id);
     }
 
 }

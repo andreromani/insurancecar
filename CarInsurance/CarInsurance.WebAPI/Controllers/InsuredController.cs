@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CarInsurance.Domain.Models;
-using CarInsurance.Service;
 using CarInsurance.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarInsurance.WebAPI.Controllers
 {
-    [Route("api/insured")]
+    [Route("api/carinsurance")]
     [ApiController]
     public class InsuredController : Controller
     {
@@ -19,9 +17,18 @@ namespace CarInsurance.WebAPI.Controllers
         {
             _insuredService = insuredService;
         }
+
+        [HttpGet("GetListInsureds", Name = "GetListInsureds")]
         public ActionResult<IEnumerable<Insured>> Get()
         {
+            try 
+            { 
             return _insuredService.Get().ToList();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro: {ex}");
+            }
         }
     }
 }
